@@ -56,7 +56,7 @@ auto stack<T>::pop()->T
 	{
 		return array_[--count_];
 	}
-	else throw std::logic_error( "Stack underflow!");
+	else throw std::underflow_error( "Stack underflow!");
 }
 
 template <typename T>
