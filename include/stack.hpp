@@ -7,6 +7,7 @@ public:
 	auto count() const -> size_t;
 	auto push(T const& value)-> void;
 	auto pop()-> T;
+	auto print_stack()->void;
 	~stack();
 private:
 	T * array_;
@@ -26,27 +27,18 @@ auto stack<T>::count() const->size_t
 template <typename T> 
 auto stack<T>::push(T const& value)->void
 {
-	if (count_ == array_size_) 
+	if (count_ == array_size_)
 	{
-	//	std::cout << "Stack is full" << std::endl;
-	 	T* new_array = new T[array_size_];
-
-		for (size_t i = 0; i < count_; i++)
-		{
-			new_array[i] = array_[i];
-		}
-		delete[] array_;
-		
-		array_ = new T[array_size_];
-		for (size_t i = 0; i < count_; i++) 
-		{
-			array_[i] = new_array[i];
-		}
-		delete[] new_array;
-
+			size_t new_size = (array_size_ == 0) + array_size_ * 2;
+			auto new_array = new T[new_size];
+			for (auto i = 0; i < count_; ++i)
+				new_array[i] = array_[i];
+			delete[] array_;
+			array_ = new_array;
+			array_size_ = new_size;
 	}
-		count_++;
-		array_[count_] == value;
+
+	array_[count_++] = value;
 }
 
 template <typename T>
@@ -63,4 +55,13 @@ template <typename T>
 stack<T>::~stack()
 {
 	delete[] array_;
+}
+
+template<typename T>
+auto stack<T>::print_stack()->void 
+{
+	for (size_t i = 0; i < count_; ++i) 
+	{
+		std::cout << array_[i] <<"\t";
+	}
 }
