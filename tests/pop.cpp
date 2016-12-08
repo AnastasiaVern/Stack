@@ -19,7 +19,7 @@ SCENARIO("Decremented number of elements after popping one from the stack")
         }
     }
 }
-SCENARIO("If stack is empty") {
+SCENARIO("If stack is empty when popping") {
     GIVEN("Empty stack")
     {
         stack<int> st1;
