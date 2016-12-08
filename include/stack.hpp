@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include <iostream>
 template <typename T>
 class stack
