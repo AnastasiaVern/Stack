@@ -25,7 +25,7 @@ SCENARIO("If stack is empty") {
         stack<int> st1;
         WHEN("popping")
         {
-            THEN("pop() must throw exception of the type underflow_error")
+            THEN("throw exception")
             {
                 REQUIRE_THROWS_AS(st1.pop(), std::underflow_error);
             }
