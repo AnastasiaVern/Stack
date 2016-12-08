@@ -19,19 +19,15 @@ SCENARIO("Decremented number of elements after popping one from the stack")
         }
     }
 }
-
-SCENARIO("If stack is empty, the size should be const")
-{
-    GIVEN("Stack is empty")
+SCENARIO("If stack is empty") {
+    GIVEN("Empty stack")
     {
         stack<int> st1;
         WHEN("popping")
         {
-            st1.pop();
-
-            THEN("size=0")
+            THEN("pop() must throw exception of the type underflow_error")
             {
-                REQUIRE(st1.count() == 0);
+                REQUIRE_THROWS_AS(st1.pop(), std::underflow_error);
             }
         }
     }
