@@ -8,7 +8,7 @@ SCENARIO("Decremented number of elements after popping one from the stack")
         stack<int> st1;
         st1.push(23);
         st1.push(45);
-        auto count = st.count();
+        auto count = st1.count();
         WHEN("popping")
         {
             st1.pop();
