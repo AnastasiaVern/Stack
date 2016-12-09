@@ -10,7 +10,6 @@ option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_TESTS "Build tests for stack" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
-
-add_library(${PROJECT_NAME} STATIC ${CMAKE_CURRENT_SOURCE_DIR}/sources/stack.cpp)
+add_executable(Examples ${CMAKE_CURRENT_SOURCE_DIR} examples/main.cpp)
 add_executable(Tests ${${PROJECT_NAME}_TEST_SOURCES} tests/count.cpp tests/push.cpp tests/pop.cpp)
 
