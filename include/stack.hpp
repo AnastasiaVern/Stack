@@ -1,13 +1,17 @@
+#include "stdafx.h"
 #include <iostream>
+#include <exception>
 template <typename T>
 class stack
 {
 public:
 	stack();
-	auto count() const -> size_t;
-	auto push(T const& value)-> void;
-	auto pop()-> T;
-	auto print_stack()->void;
+	auto count() const-> size_t; 
+	auto push(T const& value)-> void; /*strong*/
+	auto pop() -> void; /*strong*/
+	auto top()-> const T*; /*strong*/
+	auto empty() const noexcept-> bool;
+	auto print_stack() const noexcept->void;
 	~stack();
 private:
 	T * array_;
@@ -19,7 +23,7 @@ template <typename T>
 stack<T>::stack() : array_(nullptr), array_size_(0), count_(0) {};
 
 template <typename T>
-auto stack<T>::count() const->size_t
+auto stack<T>::count() const ->size_t
 {
 	return count_;
 }
@@ -30,25 +34,62 @@ auto stack<T>::push(T const& value)->void
 	if (count_ == array_size_)
 	{
 			size_t new_size = (array_size_ == 0) + array_size_ * 2;
+
 			auto new_array = new T[new_size];
-			for (auto i = 0; i < count_; ++i)
-				new_array[i] = array_[i];
-			delete[] array_;
-			array_ = new_array;
-			array_size_ = new_size;
+			try {
+				for (auto i = 0; i < count_; ++i)
+					new_array[i] = array_[i];
+				delete[] array_;
+				array_ = new_array;
+				array_size_ = new_size;
+			}
+			catch (...) 
+			{
+				delete[] new_array;
+				return;
+			}
 	}
-
-	array_[count_++] = value;
-}
-
-template <typename T>
-auto stack<T>::pop()->T
-{
-	if (count_ != 0) 
+	try {
+		array_[count_++] = value;
+	}
+	catch (...) 
 	{
-		return array_[--count_];
+		std::cerr << "error!";
 	}
-	else throw std::underflow_error( "Stack underflow!");
+
+}
+template <typename T>
+auto stack<T>::top() -> const T*
+{
+	try {
+	if (count_ != 0)
+	{
+		return &array_[--count_];
+	}
+	else
+	{ 
+		throw std::underflow_error("count_ = 0");
+	}
+	}
+   catch (std::underflow_error &e) 
+   {
+	   std::cerr << "error!!";
+   }
+}
+template <typename T>
+auto stack<T>::pop() noexcept->void
+{
+	try {
+		if (count_ != 0)
+		{
+			--count_;
+		}
+		else throw std::underflow_error("count_ = 0");
+	}
+	catch (std::underflow_error &err) 
+	{
+		std::cerr << "error!!!";
+	}
 }
 
 template <typename T>
@@ -58,10 +99,17 @@ stack<T>::~stack()
 }
 
 template<typename T>
-auto stack<T>::print_stack()->void 
+auto stack<T>::print_stack() const noexcept->void 
 {
 	for (size_t i = 0; i < count_; ++i) 
 	{
-		std::cout << array_[i] <<"\t";
+		std::cout << array_[i] <<" ";
 	}
+	std::cout << std::endl;
+}
+template<typename T> 
+auto stack<T>::empty() const noexcept->bool
+{
+	if (!count_) { return true; }
+	else { return false; }
 }
