@@ -65,7 +65,7 @@ auto stack<T>::top() -> const T*
 	}
 }
 template <typename T>
-auto stack<T>::pop() noexcept->void
+auto stack<T>::pop()->void
 {
 		if (count_ != 0)
 		{
