@@ -45,22 +45,16 @@ auto stack<T>::push(T const& value)->void
 			catch (...) 
 			{
 				delete[] new_array;
-				return;
+				throw;
 			}
 	}
-	try {
-		array_[count_++] = value;
-	}
-	catch (...) 
-	{
-		std::cerr << "error!";
-	}
+
+	array_[count_++] = value;
 
 }
 template <typename T>
 auto stack<T>::top() -> const T*
 {
-	try {
 	if (count_ != 0)
 	{
 		return &array_[--count_];
@@ -69,26 +63,15 @@ auto stack<T>::top() -> const T*
 	{ 
 		throw std::underflow_error("count_ = 0");
 	}
-	}
-   catch (std::underflow_error &e) 
-   {
-	   std::cerr << "error!!";
-   }
 }
 template <typename T>
 auto stack<T>::pop() noexcept->void
 {
-	try {
 		if (count_ != 0)
 		{
 			--count_;
 		}
 		else throw std::underflow_error("count_ = 0");
-	}
-	catch (std::underflow_error &err) 
-	{
-		std::cerr << "error!!!";
-	}
 }
 
 template <typename T>
