@@ -7,8 +7,8 @@ public:
 	stack();
 	auto count() const-> size_t; 
 	auto push(T const& value)-> void; /*strong*/
-	auto pop() -> void; /*strong*/
-	auto top()-> const T*; /*strong*/
+	auto top()-> T; /*strong*/
+	auto pop() noexcept -> void;
 	auto empty() const noexcept-> bool;
 	auto print_stack() const noexcept->void;
 	~stack();
@@ -53,11 +53,11 @@ auto stack<T>::push(T const& value)->void
 
 }
 template <typename T>
-auto stack<T>::top() -> const T*
+auto stack<T>::top() -> T
 {
 	if (count_ != 0)
 	{
-		return &array_[--count_];
+		return array_[--count_];
 	}
 	else
 	{ 
@@ -65,13 +65,11 @@ auto stack<T>::top() -> const T*
 	}
 }
 template <typename T>
-auto stack<T>::pop()->void
+auto stack<T>::pop() noexcept->void
 {
-		if (count_ != 0)
-		{
-			--count_;
-		}
-		else throw std::underflow_error("count_ = 0");
+	if (count_ != 0) {
+		--count_;
+	}
 }
 
 template <typename T>
