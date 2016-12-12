@@ -29,6 +29,7 @@ SCENARIO("If stack is empty when popping") {
         {
             THEN("throw exception")
             {
+                REQUIRE(st1.count()==0);
                 REQUIRE_THROWS_AS(st1.pop(), std::underflow_error);
             }
         }
