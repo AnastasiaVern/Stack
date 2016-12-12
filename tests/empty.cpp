@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include <stack.hpp>
 
-SCENARIO("If stack is empty")
+SCENARIO("If there's no elements in the stack")
 {
     GIVEN("Empty stack")
     {
