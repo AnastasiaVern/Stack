@@ -6,15 +6,17 @@ SCENARIO("Decremented number of elements after popping one from the stack")
     GIVEN("stack")
     {
         stack<int> st1;
-        st1.push(23);
-        st1.push(45);
-        auto count = st1.count();
+        st1.push(2);
+        st1.push(3);
+        st1.push(4);
+        st1.push(5);
         WHEN("popping")
         {
             st1.pop();
             THEN("Number of elements must be decremented by one")
             {
-                REQUIRE(st1.count() == count - 1);
+                REQUIRE(st1.count() == 3);
+                REQUIRE(st1.top()==4);
             }
         }
     }
