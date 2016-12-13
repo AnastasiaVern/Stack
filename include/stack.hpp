@@ -60,7 +60,8 @@ auto stack<T>::top() const -> T
 {
 	if (count_ != 0)
 	{
-		return array_[count_-1];
+	       auto top=array_[count_-1];
+		return top;
 	}
 	else
 	{ 
