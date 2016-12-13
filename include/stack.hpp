@@ -7,7 +7,7 @@ public:
 	stack();
 	auto count() const-> size_t; 
 	auto push(T const& value)-> void; /*strong*/
-	auto top()-> T; /*strong*/
+	auto top() const-> T; /*strong*/
 	auto pop() noexcept -> void;
 	auto empty() const noexcept-> bool;
 	auto print_stack() const noexcept->void;
@@ -48,12 +48,15 @@ auto stack<T>::push(T const& value)->void
 				throw;
 			}
 	}
-
+   try {
 	array_[count_++] = value;
+	}
+	catch(...)
+	{ }
 
 }
 template <typename T>
-auto stack<T>::top() -> T
+auto stack<T>::top() const -> T
 {
 	if (count_ != 0)
 	{
