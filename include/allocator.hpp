@@ -22,34 +22,27 @@ public:
 template<typename T>
 allocator<T>::allocator(size_t size) 
 {
-	if (size>0)
-	{
-	ptr_ = static_cast<T*>(::operator new(size * sizeof(T)));
-	size_=size;
-	count_ = 0;
+	if (size > 0) {
+		ptr_ = static_cast<T*>(::operator new(size * sizeof(T)));
+		size_ = size;
+		count_ = 0;
 	}
 }
 
 template<typename T>
 auto allocator<T>::swap(allocator& other) -> void 
 {
-	try 
+	try
 	{
-		size_ * 2;
-		other.size_;
-		while (ptr_!= ptr_ + count_)
-		{
-			*other.ptr_++ = *ptr_++;
-		}
-		other.count_ = count_;
 		std::swap(ptr_, other.ptr_);
 		std::swap(size_, other.size_);
+		std::swap(count_, other.count_);
+
 	}
 	catch (...) 
 	{
-		std::cerr << "error!";
+		std::cerr << "can't swap :(" << std::endl;
 	}
-	
 }
 
 template<typename T>
