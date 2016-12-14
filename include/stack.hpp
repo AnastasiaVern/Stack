@@ -19,7 +19,7 @@ private:
 };
 
 template <typename T>
-stack<T>::stack() : array_(nullptr), array_size_(0), count_(0) {};
+stack<T>::stack() : array_(new T[array_size_]), array_size_(0), count_(0) {};
 
 template <typename T>
 auto stack<T>::count() const noexcept -> size_t
