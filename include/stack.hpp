@@ -30,6 +30,7 @@ auto stack<T>::count() const ->size_t
 template <typename T> 
 auto stack<T>::push(T const& value)->void /*strong*/
 {
+	bool any_change=false; 
 	auto * old_arr= array_;
 	if (count_ == array_size_)
 	{   
@@ -48,7 +49,7 @@ auto stack<T>::push(T const& value)->void /*strong*/
 			}
 		                array_ = new_array;
 				array_size_ = new_size;
-		                bool any_change=true; 
+		                any_change=true; 
 	}
    try {
 	array_[count_] = value;
