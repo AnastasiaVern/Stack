@@ -11,8 +11,6 @@ option(BUILD_TESTS "Build tests for stack" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
-add_executable(Examples ${CMAKE_CURRENT_SOURCE_DIR}/examples/main.cpp)
-
 if(BUILD_TESTS)
     enable_testing()
     file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
