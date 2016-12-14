@@ -1,6 +1,5 @@
 #include <iostream>
 #include <exception>
-#include <algorithm>
 template <typename T>
 class stack
 {
