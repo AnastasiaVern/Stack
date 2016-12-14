@@ -1,5 +1,6 @@
 #include <iostream>
 #include <exception>
+#include <algorithm>
 template <typename T>
 class stack
 {
@@ -37,12 +38,10 @@ auto stack<T>::push(T const& value)->void /*strong*/
     if (count_ == array_size_)
     {
         array_size_ *= 2;
-
         try
         {
             new_array = new T[array_size_];
-		for(size_t i=0; i < *(array_+count_); ++i)
-		 new_array[i] = array_[i]; 
+           std::copy(array_, array_+count_, new_array);
         }
         catch (...)
         {
@@ -63,14 +62,17 @@ auto stack<T>::push(T const& value)->void /*strong*/
         if (any_change)
         {
             delete[] array_;
-            array_ = old_array;
             array_size_ /= 2;
+            array_ = old_array;
         }
         throw;
     }
 	
     ++count_;
-    if (any_change) delete[] old_array;
+    if (any_change)  
+    {
+	    delete[] old_array;
+    }
     return;
 
 }
