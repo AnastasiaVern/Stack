@@ -30,43 +30,49 @@ auto stack<T>::count() const noexcept -> size_t
 template <typename T> 
 auto stack<T>::push(T const& value)->void /*strong*/
 {
-	bool any_change=false; 
-	T* old_arr= array_;
-	T* new_array= nullptr; 
-	if (count_ == array_size_)
-	{   
-			size_t new_size = (array_size_ == 0) + array_size_ * 2;
-		        new_array = new T[new_size];
-			try {
-				
-				for (auto i = 0; i < count_; ++i)
-					new_array[i] = array_[i];
-				delete[] array_;
-			}
-			catch (...) 
-			{
-				delete[] new_array;
-				throw;
-			}
-		                array_ = new_array;
-				array_size_ = new_size;
-		                any_change=true; 
-	}
-   try {
-	array_[count_] = value;
-	}
-	catch(...)
-	{ 
-		if (any_change)
-		{
-			delete [] array_;
-			array_=old_arr;
-			array_size_/=2;
-		}
-		throw;
-	}
-	if (any_change) { delete [] old_arr; } 
-        return;
+    bool any_change= false;
+    auto old_array = array_;
+    auto new_array = nullptr;
+
+    if (count_ == array_size_)
+    {
+        array_size_ *= 2;
+
+        try
+        {
+            new_array = new T[array_size_];
+		for(size_t i=0; i<(array_+count_); ++i)
+		 new_array[i]=array_[i]; 
+        }
+        catch (...)
+        {
+            delete[] new_array;
+            array_size_ /= 2;
+            throw;
+        }
+        array_ = new_array;
+        any_change = true;
+    }
+
+    try
+    {
+        array_[count_] = value;
+    }
+    catch (...)
+    {
+        if (any_change)
+        {
+            delete[] array_;
+            array_ = old_array;
+            array_size_ /= 2;
+        }
+        throw;
+    }
+	
+    ++count_;
+    if (any_change) delete[] old_array;
+    return;
+
 }
 template <typename T>
 auto stack<T>::top() const -> T
