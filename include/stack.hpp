@@ -66,7 +66,7 @@ auto stack<T>::push(T const& value)->void /*strong*/
 		throw;
 	}
 	if (any_change) { delete [] old_arr; } 
-
+        return;
 }
 template <typename T>
 auto stack<T>::top() const -> T
