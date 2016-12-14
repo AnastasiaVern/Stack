@@ -41,8 +41,8 @@ auto stack<T>::push(T const& value)->void /*strong*/
         try
         {
             new_array = new T[array_size_];
-		for(size_t i=0; i<(array_+count_); ++i)
-		 new_array[i]=array_[i]; 
+		for(size_t i=0; i < *(array_+count_); ++i)
+		 new_array[i] = array_[i]; 
         }
         catch (...)
         {
