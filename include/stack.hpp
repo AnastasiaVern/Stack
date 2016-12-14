@@ -41,7 +41,10 @@ auto stack<T>::push(T const& value)->void /*strong*/
         try
         {
             new_array = new T[array_size_];
-           std::copy(array_, array_+count_, new_array);
+       while (array_ != array_ + count_) 
+       {
+				*new_array++ = *array_++;
+			}
         }
         catch (...)
         {
