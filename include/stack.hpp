@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Allocator.hpp"
 #include <iostream>
 #include <exception>
