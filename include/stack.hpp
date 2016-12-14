@@ -5,7 +5,7 @@ class stack
 {
 public:
 	stack();
-	auto count() noexcept const-> size_t; 
+	auto count() const noexcept -> size_t; 
 	auto push(T const& value)-> void; /*strong*/
 	auto top() const-> T; /*strong*/
 	auto pop() noexcept -> void;
@@ -22,7 +22,7 @@ template <typename T>
 stack<T>::stack() : array_(nullptr), array_size_(0), count_(0) {};
 
 template <typename T>
-auto stack<T>::count() noexcept const ->size_t
+auto stack<T>::count() const noexcept -> size_t
 {
 	return count_;
 }
