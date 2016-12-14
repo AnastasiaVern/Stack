@@ -31,7 +31,7 @@ template <typename T>
 auto stack<T>::push(T const& value)->void /*strong*/
 {
 	bool any_change=false; 
-	auto * old_arr= array_;
+	auto old_arr= array_;
 	if (count_ == array_size_)
 	{   
 			size_t new_size = (array_size_ == 0) + array_size_ * 2;
