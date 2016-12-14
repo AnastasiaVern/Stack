@@ -28,31 +28,42 @@ auto stack<T>::count() const ->size_t
 }
 
 template <typename T> 
-auto stack<T>::push(T const& value)->void
+auto stack<T>::push(T const& value)->void /*strong*/
 {
+	auto * old_arr= array_;
 	if (count_ == array_size_)
-	{
+	{   
 			size_t new_size = (array_size_ == 0) + array_size_ * 2;
-
-			auto new_array = new T[new_size];
 			try {
+				auto new_array = new T[new_size];
 				for (auto i = 0; i < count_; ++i)
 					new_array[i] = array_[i];
 				delete[] array_;
-				array_ = new_array;
-				array_size_ = new_size;
 			}
 			catch (...) 
 			{
 				delete[] new_array;
 				throw;
 			}
+		                array_ = new_array;
+				array_size_ = new_size;
+		                bool any_change=true; 
 	}
    try {
-	array_[count_++] = value;
+	array_[count_] = value;
 	}
 	catch(...)
-	{ }
+	{ 
+		if (any_change)
+		{
+			delete [] array_;
+			array_=old_arr;
+			array_size_/=2;
+		}
+		throw;
+	}
+	++count_;
+	if (any_change) { delete [] old_arr; } 
 
 }
 template <typename T>
