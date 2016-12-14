@@ -49,6 +49,6 @@ auto stack<T>::pop() noexcept->void
 template<typename T>
 auto stack<T>::empty() const noexcept->bool
 {
-	if (!allocator<T>::count_;) { return true; }
+	if (!allocator<T>::count_) { return true; }
 	else { return false; }
 }
