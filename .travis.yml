@@ -20,4 +20,3 @@ script:
   - cd build
   - cmake ..
   - make
-  - ./Tests -s -r compact
