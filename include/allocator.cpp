@@ -22,9 +22,12 @@ public:
 template<typename T>
 allocator<T>::allocator(size_t size) 
 {
+	if (size>0)
+	{
 	ptr_ = static_cast<T*>(::operator new(size * sizeof(T)));
 	size_=size;
 	count_ = 0;
+	}
 }
 
 template<typename T>
