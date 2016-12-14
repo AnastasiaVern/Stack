@@ -31,11 +31,12 @@ template <typename T>
 auto stack<T>::push(T const& value)->void /*strong*/
 {
 	bool any_change=false; 
-	auto old_arr= array_;
+	T* old_arr= array_;
+	T* new_array= nullptr; 
 	if (count_ == array_size_)
 	{   
 			size_t new_size = (array_size_ == 0) + array_size_ * 2;
-		        auto new_array = new T[new_size];
+		        new_array = new T[new_size];
 			try {
 				
 				for (auto i = 0; i < count_; ++i)
