@@ -64,7 +64,6 @@ auto stack<T>::push(T const& value)->void /*strong*/
 		}
 		throw;
 	}
-	++count_;
 	if (any_change) { delete [] old_arr; } 
 
 }
