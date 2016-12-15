@@ -10,3 +10,10 @@ option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_TESTS "Build tests for stack" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
+
+if(BUILD_TESTS)
+    enable_testing()
+    file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
+    add_executable(Tests ${${PROJECT_NAME}_TEST_SOURCES})
+    add_test(NAME Tests COMMAND check "-s" "-r" "compact" "--use-colour" "yes")
+endif()
