@@ -8,15 +8,10 @@ class stack : public allocator<T>
 public:
 	stack() : allocator<T>(5) {};
 	auto count() const noexcept->size_t;
-	auto push(T const& value)-> void;
+	auto push(T const& value)-> void; /*strong*/
 	auto top() const->T; 
 	auto pop() noexcept -> void;
 	auto empty() const noexcept-> bool;
-
-/*private:
-	T * array_;
-	size_t array_size_;
-	size_t count_;*/
 };
 
 template <typename T>
@@ -26,23 +21,38 @@ auto stack<T>::count() const noexcept -> size_t
 }
 
 template <typename T>
-auto stack<T>::push(T const& value)->void 
+auto stack<T>::push(T const& value)->void /*strong*/
 {
-	if (allocator<T>::count_ == allocator<T>::size_) 
-	{
-		try {
-			T* new_ptr = static_cast<T*>(operator new[](size_ * sizeof(T) * 2));
-			allocator<T> other(size_ * sizeof(T) * 2);
-			std::copy(allocator<T>::ptr_, allocator<T>::ptr_ + allocator<T>::count_, new_ptr);
-			swap(other);
-			allocator<T>::ptr_[allocator<T>::count_] = value;
-			allocator<T>::count_++;
-		}
-		catch (...) 
-		{
-			std::cerr << "error!";
-		}
-	}
+	    bool any_change = false;
+        if (allocator<T>::count_ == allocator<T>::size_)
+        {
+	try {
+            allocator<T>::allocate();
+            any_change = true;
+	    }
+        }
+    }
+    catch (...)
+    {
+        throw;
+    }
+
+    try
+    {
+        allocator<T>::ptr_[allocator<T>::count_] = value;
+    }
+    catch (...)
+    {
+        if (any_change)
+        {
+            allocator<T>::size_ /= 2;
+            allocator<T>::relocate();
+        }
+        throw;
+    }
+
+    ++allocator<T>::count_;
+    return;
 }
 template <typename T>
 auto stack<T>::top() const -> T
