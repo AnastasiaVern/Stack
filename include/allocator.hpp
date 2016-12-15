@@ -9,6 +9,8 @@ class allocator
 public:
 	allocator(size_t size = 0);
 	auto swap(allocator& other) -> void;
+	auto allocate() -> void;
+	auto relocate() -> void;
 	allocator(allocator const& alloc) noexcept= delete;
 	auto operator =(allocator const& )->allocator& = delete;
 	~allocator();
@@ -32,17 +34,32 @@ allocator<T>::allocator(size_t size)
 template<typename T>
 auto allocator<T>::swap(allocator& other) -> void 
 {
-	try
-	{
-		std::swap(ptr_, other.ptr_);
-		std::swap(size_, other.size_);
-		std::swap(count_, other.count_);
-
-	}
-	catch (...) 
-	{
-		std::cerr << "can't swap :(" << std::endl;
-	}
+	std::swap(ptr_, other.ptr_);
+	std::swap(size_, other.size_);
+	std::swap(count_, other.count_);
+}
+template<typename T>
+auto allocator<T>::allocate() -> void 
+{
+      old_size=size_;
+      size_ *= 2;
+      try {
+      relocate();
+      }
+      catch(...) 
+      {
+       size_=old_size;
+       throw;
+      }
+      
+}
+template<typename T>
+auto allocator<T>::relocate() -> void
+{
+   allocator<T> arr(size_);
+   std::copy(ptr_, ptr_+ count_,arr.ptr_);
+   arr.count_=count_;
+   swap(arr);
 }
 
 template<typename T>
