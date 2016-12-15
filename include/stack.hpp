@@ -55,20 +55,17 @@ auto stack<T>::push(T const& value)->void /*strong*/
 template <typename T>
 auto stack<T>::top() const -> T
 {
-	if (allocator<T>::count_)
-	{
-		return allocator<T>::ptr_[allocator<T>::count_ - 1];
-	}
-	else
-	{
-		throw std::underflow_error("count_ = 0");
-	}
+	    if (allocator<T>::count_ != 0)
+    {
+        return allocator<T>::ptr_[allocator<T>::count_ - 1];
+    }
+    throw std::underflow_error("Stack is empty!");
 }
 template <typename T>
 auto stack<T>::pop() noexcept->void
 {
 	if (allocator<T>::count_)
-		allocator<T>::count_--;
+		--allocator<T>::count_;
 }
 
 template<typename T>
