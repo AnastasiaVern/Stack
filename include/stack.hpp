@@ -30,11 +30,10 @@ auto stack<T>::push(T const& value)->void /*strong*/
             allocator<T>::allocate();
             any_change = true;
 	    }
-        }
-    catch (...)
-    {
+        catch (...)
+            {
         throw;
-    }
+            }
 
     try
     {
@@ -49,7 +48,7 @@ auto stack<T>::push(T const& value)->void /*strong*/
         }
         throw;
     }
-
+	}
     ++allocator<T>::count_;
     return;
 }
