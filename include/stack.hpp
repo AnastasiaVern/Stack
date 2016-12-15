@@ -31,7 +31,6 @@ auto stack<T>::push(T const& value)->void /*strong*/
             any_change = true;
 	    }
         }
-    }
     catch (...)
     {
         throw;
