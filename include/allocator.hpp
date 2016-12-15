@@ -6,7 +6,7 @@
 template <typename T>
 class allocator
 {
-public:
+protected:
 	allocator(size_t size = 0);
 	auto swap(allocator& other) -> void;
 	auto allocate() -> void;
