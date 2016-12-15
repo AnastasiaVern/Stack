@@ -41,7 +41,7 @@ auto allocator<T>::swap(allocator& other) -> void
 template<typename T>
 auto allocator<T>::allocate() -> void 
 {
-      old_size=size_;
+      auto old_size=size_;
       size_ *= 2;
       try {
       relocate();
